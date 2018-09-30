@@ -5,13 +5,14 @@
   <?php
   //start session
   session_start();
-  //check  seesion vaiable userid is present and user logged in
+  //check  session vaiable username is present and user logged in
   if(isset($_SESSION['username']))
   {
   ?>
      <title>Login</title>
      <link rel="stylesheet" href="style.css" title="Style Sheet" type="text/css" />
      <?php
+     //include relevant files
       include "header.php";
       include "connection.php";
      ?>

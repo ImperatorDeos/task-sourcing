@@ -5,6 +5,7 @@
      <title>Login</title>
      <link rel="stylesheet" href="style.css" title="Style Sheet" type="text/css" />
      <?php
+     //include connection to database
       include "connection.php";
      ?>
   </head>
@@ -18,7 +19,9 @@
       </form>
 
     <?php
+    //check for user input
      if (isset($_POST['submit'])){
+
     	session_start();
 
     	$username = $_POST['user'];
@@ -33,14 +36,17 @@
     /*  if(pg_fetch_row($result) == 0){
 	        echo "Please try again";
       }*/
+      //verify that password matches pasword stored in database
       if($password != $userdata['password']){
         echo "Please try again";
       }else{
+        //create session with attributes of user details
 		      session_regenerate_id();
 		      $_SESSION['fname'] = $userdata['fname'];
           $_SESSION['lname'] = $userdata['lname'];
 		      $_SESSION['username'] = $userdata['username'];
 		      session_write_close();
+          //redirect to home page
 		      header('location: home.php');
 	     }
 
