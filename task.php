@@ -19,15 +19,17 @@
 
   <body>
   <?php
-    echo "All tasks: \r\n";
+    //Query selecting all task names
+    echo "All tasks:";
 
     $query = "SELECT tname FROM task";
     $result = pg_query($db,$query);
     while($row = pg_fetch_array($result)) {
         echo $row['tname'];
         echo "<br>";
-
-}
+    }
+    //Cant get the link to work:
+    //echo "<a href="Home.php">Home</a>";
 
 
 

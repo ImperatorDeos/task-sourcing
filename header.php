@@ -6,6 +6,7 @@
     <ul id="menu">
       <li><a href="Home.php">Home</a></li>
       <li><a href="Account.php">Profile</a></li>
+      <li><a href="Task.php">Tasks</a></li>
       <div id="search">
         <form method="POST" id="searchform" action="search.php">
           <div>
