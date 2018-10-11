@@ -5,8 +5,16 @@
      <title>Login</title>
      <link rel="stylesheet" href="style.css" title="Style Sheet" type="text/css" />
      <?php
+     //start session
+     session_start();
+     //check  session vaiable username is present and user logged in
+     if(isset($_SESSION['username']))
+     {
+       header('location: home.php');
+     }
      //include connection to database
       include "connection.php";
+
      ?>
   </head>
 
@@ -29,26 +37,40 @@
 
 
       $query = "SELECT * FROM member WHERE username = '$username'";
+      $chkadmin = "SELECT * FROM admin WHERE username = '$username'";
 
+      /*check for username & password*/
     	$result = pg_query($db,$query);
       $userdata = pg_fetch_array($result);
 
-    /*  if(pg_fetch_row($result) == 0){
-	        echo "Please try again";
-      }*/
+      /*check for admin */
+      $chkresult = pg_query($db,$chkadmin);
+      $checkuserdata = pg_fetch_array($chkresult);
+
       //verify that password matches pasword stored in database
       if($password != $userdata['password']){
         echo "Please try again";
-      }else{
-        //create session with attributes of user details
+      }else if($username == $checkuserdata['username']){
+        //check if user is an admin or not - if so assign admin status
 		      session_regenerate_id();
 		      $_SESSION['fname'] = $userdata['fname'];
           $_SESSION['lname'] = $userdata['lname'];
 		      $_SESSION['username'] = $userdata['username'];
+          $_SESSION['admin'] = TRUE;
 		      session_write_close();
           //redirect to home page
 		      header('location: home.php');
-	     }
+	     }else{
+           //create session with attributes of user details
+         session_regenerate_id();
+         $_SESSION['fname'] = $userdata['fname'];
+         $_SESSION['lname'] = $userdata['lname'];
+         $_SESSION['username'] = $userdata['username'];
+         session_write_close();
+         //redirect to home page
+         header('location: home.php');
+
+       }
 
 
     }

@@ -6,30 +6,32 @@
   //start session
   session_start();
   //check  session vaiable username is present and user logged in
-  if(isset($_SESSION['username']))
+  if(isset($_SESSION['admin']))
   {
     //include relevant files
     include "connection.php";
     include "header.php";
   ?>
-     <title>Tasks</title>
+     <title>Edit Tasks</title>
      <link rel="stylesheet" href="style.css" title="Style Sheet" type="text/css" />
   </head>
 
   <body>
   <?php
-
-    /*List all tasks with and option to bid on each individual task */
+    /*List all tasks with and option to edit each individual task */
     echo "Tasks";
     echo '<table>
-            <tr><th>Task Name</th><th>Description</th><th>Location</th><th>Date</th><th>Start</th><th>End</th><th>Ask Price</th><th>Bid</th></tr>';
+            <tr><th>Task Name</th><th>Description</th><th>Location</th><th>Date</th><th>Start</th><th>End</th><th>Ask Price</th><th>Edit Task</th></tr>';
     $query = "SELECT * FROM task ORDER BY tid";
     $result = pg_query($db,$query);
     while($tasks = pg_fetch_array($result)) {
       echo '<tr><td>'.$tasks['tname'].'</td><td>'.$tasks['tdiscrip'].'</td><td>'.$tasks['location'].'</td><td>'.$tasks['sdate'].'</td><td>'.$tasks['starttime'].'</td><td>'.$tasks[endtime].'</td><td>'.$tasks['setprice'].'</td>
-      <td><form action="bid.php" method="POST"><input id="blank" type="hidden" name="Taskid" value="'.$tasks['tid'].'"> <input type="submit" name="bid" id="submit" value="Bid"/></form></td></tr>';
+      <td><form action="edit-task.php" method="POST"><input id="blank" type="hidden" name="Taskid" value="'.$tasks['tid'].'"> <input type="submit" name="edit" id="submit" value="Edit Task"/></form></td></tr>';
     }
     echo '</table>';
+
+    //Cant get the link to work:
+
 
 
 

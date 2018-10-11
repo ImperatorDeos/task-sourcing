@@ -8,14 +8,12 @@
   //check  session vaiable username is present and user logged in
   if(isset($_SESSION['username']))
   {
+    //include relevant files
+     include "header.php";
+     include "connection.php";
   ?>
-     <title>Login</title>
+     <title>Home</title>
      <link rel="stylesheet" href="style.css" title="Style Sheet" type="text/css" />
-     <?php
-     //include relevant files
-      include "header.php";
-      include "connection.php";
-     ?>
   </head>
 
   <body>

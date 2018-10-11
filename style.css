@@ -1,0 +1,22 @@
+body{
+
+}
+h1{
+  color: red;
+}
+
+form{
+  display: inline-block;
+}
+
+input[type=text]{
+  display: inline-block;
+
+
+}
+
+table,th,td{
+
+    border: 1px solid black;
+
+}
