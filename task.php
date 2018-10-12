@@ -36,7 +36,8 @@
 
   }else{
     //if user is not logged in
-    header ('location: login.php');
+    //header ('location: login.php');
+    return;
   }
 
   ?>
