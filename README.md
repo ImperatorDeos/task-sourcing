@@ -2,6 +2,7 @@
 
 ## Header Files
 Header php files are also being used to enable the connection to database and to make changes to certain sections easier e.g. Navigation Bar
+Please include these in all scripts.
 
 ## Authentication
 Authentication functionality has been enabled. User must login to access pages beyond login.php

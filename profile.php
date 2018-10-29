@@ -32,9 +32,10 @@
   $query = "SELECT * FROM task WHERE username = '$username' AND active = TRUE";
   $result = pg_query($db,$query);
   echo '<table>
-          <tr><th>Task Name</th><th>Description</th><th>Location</th><th>Date</th><th>Start</th><th>End</th><th>Price</th></tr>';
+          <tr><th>Task Name</th><th>Description</th><th>Location</th><th>Date</th><th>Start</th><th>End</th><th>Price</th><th>View Bids</th></tr>';
   while($tasks = pg_fetch_array($result)){
-    echo '<tr><td>'.$tasks['tname'].'</td><td>'.$tasks['tdiscrip'].'</td><td>'.$tasks['location'].'</td><td>'.$tasks['sdate'].'</td><td>'.$tasks['starttime'].'</td><td>'.$tasks[endtime].'</td><td>'.$tasks['setprice'].'</td></tr>';
+    echo '<tr><td>'.$tasks['tname'].'</td><td>'.$tasks['tdiscrip'].'</td><td>'.$tasks['location'].'</td><td>'.$tasks['sdate'].'</td><td>'.$tasks['starttime'].'</td><td>'.$tasks[endtime].'</td><td>'.$tasks['setprice'].'</td>
+    <td><form action="winner.php" method="POST"><input id="blank" type="hidden" name="Taskid" value="'.$tasks['tid'].'"> <input type="submit" name="viewbids" id="submit" value="View Bids"/></form></td></tr>';
   }
   echo '</table>';
 
@@ -59,7 +60,7 @@
 
     echo '<table>
             <tr><th>Task Name</th><th>Description</th><th>Location</th><th>Date</th><th>Start</th><th>End</th><th>Ask Price</th><th>Bid Price</th></tr>';
-    $query = "SELECT * FROM task INNER JOIN bids on bids.tid = task.tid INNER JOIN winner on winner.tid = task.tid WHERE winner.username = '$username'";
+    $query = "SELECT * FROM task INNER JOIN bids on bids.tid = task.tid INNER JOIN winner on winner.tid = task.tid WHERE winner.username = '$username' ORDER BY sdate DESC";
     $result = pg_query($db,$query);
     while($tasks = pg_fetch_array($result)){
       echo '<tr><td>'.$tasks['tname'].'</td><td>'.$tasks['tdiscrip'].'</td><td>'.$tasks['location'].'</td><td>'.$tasks['sdate'].'</td><td>'.$tasks['starttime'].'</td><td>'.$tasks[endtime].'</td><td>'.$tasks['setprice'].'</td><td>'.$tasks['price'].'</td></tr>';

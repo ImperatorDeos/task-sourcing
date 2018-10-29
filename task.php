@@ -20,14 +20,15 @@
   <?php
 
     /*List all tasks with and option to bid on each individual task */
-    echo "Tasks";
+    echo '<form action="createTask.php" method="POST"><input type="submit" name="createTask" id="submit" value="Create New Task"/></form></br>';
+    echo "Tasks: </br>";
     echo '<table>
             <tr><th>Task Name</th><th>Description</th><th>Location</th><th>Date</th><th>Start</th><th>End</th><th>Ask Price</th><th>Bid</th></tr>';
-    $query = "SELECT * FROM task ORDER BY tid";
+    $query = "SELECT * FROM task WHERE active='TRUE' ORDER BY tid";
     $result = pg_query($db,$query);
     while($tasks = pg_fetch_array($result)) {
       echo '<tr><td>'.$tasks['tname'].'</td><td>'.$tasks['tdiscrip'].'</td><td>'.$tasks['location'].'</td><td>'.$tasks['sdate'].'</td><td>'.$tasks['starttime'].'</td><td>'.$tasks[endtime].'</td><td>'.$tasks['setprice'].'</td>
-      <td><form action="bid.php" method="POST"><input id="blank" type="hidden" name="Taskid" value="'.$tasks['tid'].'"> <input type="submit" name="bid" id="submit" value="Bid"/></form></td></tr>';
+      <td><form action="bid.php" method="POST"><input id="blank" type="hidden" name="Taskid" value="'.$tasks['tid'].'"> <input type="submit" name="placebid" id="submit" value="Bid"/></form></td></tr>';
     }
     echo '</table>';
 
