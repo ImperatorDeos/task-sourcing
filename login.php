@@ -56,7 +56,7 @@
 		      $_SESSION['fname'] = $userdata['fname'];
           $_SESSION['lname'] = $userdata['lname'];
 		      $_SESSION['username'] = $userdata['username'];
-          $_SESSION['admin'] = TRUE;
+          $_SESSION['admin'] = $userdata['username'];
 		      session_write_close();
           //redirect to home page
 		      header('location: home.php');

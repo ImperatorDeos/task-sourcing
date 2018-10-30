@@ -37,8 +37,7 @@
       //SQL query to update task table
       $qry = "UPDATE task SET tname='$tname', tdiscrip='$tdiscrip', location='$location', sdate='$date', starttime='$stime', endtime='$etime', username='$username', active='$active', setprice='$price'  WHERE tid='$tid'";
       $result = pg_query($db,$qry);
-      if(!$result)
-      {
+      if(!$result){
         //if query fails, giver user options to go back or try again
         echo "Failed to update, try again";
         echo '<form action="edit-task.php" method="POST"><input id="blank" type="hidden" name="Taskid" value="'.$tid.'"> <input type="submit" name="edit" id="submit" value="Try Again"/></form>';
@@ -65,9 +64,16 @@
                    Start Time: <br><input type="text" name="stime" value="'.$task['starttime'].'" required></br>
                    End Time: <br><input type="text" name="etime" value="'.$task['endtime'].'" required></br>
                    User Belonging Too: <br><input type="text" name="username" value="'.$task['username'].'" required></br>
-                   Active: <br><input type="text" name="active" value="'.$task['active'].'" required></br>
+                   Active: <br><input type="text" name="active"';
+                   /*Display true|false in a user friendly manner*/
+                   if($task['active'] == "t"){
+                     echo 'value="True"';
+                   }else{
+                     echo 'value="False"';
+                   }
+                   echo 'required></br>
                    Price: <br><input type="text" name="price" value="'.$task['setprice'].'" required></br>
-                  <input type="text" name="tid" value="'.$task['tid'].'">
+                  <input type="hidden" name="tid" value="'.$task['tid'].'">
                    <input type="submit" name="update" id="submit" value="Update Task" />
                  </form>';
 
