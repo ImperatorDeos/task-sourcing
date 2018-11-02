@@ -4,6 +4,10 @@
   <head>
      <title>Login</title>
      <link rel="stylesheet" href="style.css" title="Style Sheet" type="text/css" />
+     <!-- Bootstrap CSS -->
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
      <?php
      //start session
      session_start();
@@ -19,12 +23,22 @@
   </head>
 
   <body>
+    <div class="login-title">
+      <h1 class="display-4"> Task Sourcing! </h1>
+    </div>
 
+      <div class="login-form">
       <form action="login.php" method="POST">
-        <label for="user">Username:</label> <input type="text" name="user" id="user">
-        <label for="pass">Password:</label> <input type="password" name="pass" id="pass">
-        <input type="submit" id="login" value="Login" name="submit">
+        <div  class="form-group">
+          <label for="user">Username:</label> <input type="text" class="form-control" name="user" id="user">
+        </div>
+        <div  class="form-group">
+          <label for="pass">Password:</label> <input type="password" class="form-control" name="pass" id="pass">
+        </div>
+        <input type="submit" class="btn btn-primary" id="login" value="Login" name="submit">
       </form>
+    </div>
+
 
     <?php
     //check for user input
@@ -48,8 +62,12 @@
       $checkuserdata = pg_fetch_array($chkresult);
 
       //verify that password matches pasword stored in database
-      if($password != $userdata['password']){
-        echo "Please try again";
+      if($password != $userdata['password'] || ($password == "" && $username = "")){
+        echo '<div class="alert alert-danger" role="alert">
+                <div class="myalert">
+                  Please try again!
+                </div>
+              </div>';
       }else if($username == $checkuserdata['username']){
         //check if user is an admin or not - if so assign admin status
 		      session_regenerate_id();

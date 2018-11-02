@@ -19,8 +19,8 @@
   <body>
   <?php
     /*List all tasks with and option to edit each individual task */
-    echo "Users";
-    echo '<table>
+    echo "<h2>Users</h2>";
+    echo '<table class="table">
             <tr><th>First Name</th><th>Last Name</th><th>username</th><th>Admin</th><th>Edit</th></tr>';
 
     $query = "SELECT * FROM member ORDER BY lname ASC";

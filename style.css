@@ -15,8 +15,18 @@ input[type=text]{
 
 }
 
-table,th,td{
-
+/*table,th,td{
     border: 1px solid black;
 
+}*/
+
+.login-form{
+  text-align: center;
+}
+.login-title{
+  text-align: center;
+}
+
+.myalert{
+  text-align: center;
 }
