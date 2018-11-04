@@ -11,8 +11,10 @@ form{
 
 input[type=text]{
   display: inline-block;
+}
 
-
+.admin-yes{
+  font-weight: bold;
 }
 
 /*table,th,td{

@@ -13,7 +13,7 @@
      include "connection.php";
   ?>
      <title><?php echo $_SESSION['fname']."'s "; ?>Profile</title>
-     <link rel="stylesheet" href="style.css" title="Style Sheet" type="text/css" />
+
   </head>
 
   <body>
@@ -35,7 +35,7 @@
           <tr><th>Task Name</th><th>Description</th><th>Location</th><th>Date</th><th>Start</th><th>End</th><th>Price</th><th>View Bids</th></tr>';
   while($tasks = pg_fetch_array($result)){
     echo '<tr><td>'.$tasks['tname'].'</td><td>'.$tasks['tdiscrip'].'</td><td>'.$tasks['location'].'</td><td>'.$tasks['sdate'].'</td><td>'.$tasks['starttime'].'</td><td>'.$tasks[endtime].'</td><td>'.$tasks['setprice'].'</td>
-    <td><form action="winner.php" method="POST"><input id="blank" type="hidden" name="Taskid" value="'.$tasks['tid'].'"> <input type="submit" name="viewbids" id="submit" value="View Bids"/></form></td></tr>';
+    <td><form action="winner.php" method="POST"><input id="blank" type="hidden" name="Taskid" value="'.$tasks['tid'].'"> <input type="submit" class="btn btn-secondary btn-sm" name="viewbids" id="submit" value="View Bids"/></form></td></tr>';
   }
   echo '</table>';
 
@@ -68,25 +68,28 @@
   echo '</table>';
 
 
-
-
-
   /*Find and display all the past tasks that belong to this user*/
   echo '<h3>Past Tasks</h3>';
+
+  echo '<table class="table">
+          <tr><th>Task Name</th><th>Description</th><th>Location</th><th>Date</th><th>Start</th><th>End</th><th>Price</th><th>Winner</th></tr>';
   $query = "SELECT * FROM task WHERE username = '$username' AND active = FALSE";
   $result = pg_query($db,$query);
-  echo '<table class="table">
-          <tr><th>Task Name</th><th>Description</th><th>Location</th><th>Date</th><th>Start</th><th>End</th><th>Price</th></tr>';
   while($tasks = pg_fetch_array($result)){
-    echo '<tr><td>'.$tasks['tname'].'</td><td>'.$tasks['tdiscrip'].'</td><td>'.$tasks['location'].'</td><td>'.$tasks['sdate'].'</td><td>'.$tasks['starttime'].'</td><td>'.$tasks[endtime].'</td><td>'.$tasks['setprice'].'</td></tr>';
+    /*see if there is a winner for each respective past task*/
+    $tid = $tasks['tid'];
+    $qry = "SELECT username FROM winner WHERE tid = '$tid'";
+    $winner = pg_query($db,$qry);
+    echo '<tr><td>'.$tasks['tname'].'</td><td>'.$tasks['tdiscrip'].'</td><td>'.$tasks['location'].'</td><td>'.$tasks['sdate'].'</td><td>'.$tasks['starttime'].'</td><td>'.$tasks[endtime].'</td><td>'.$tasks['setprice'].'</td>';
+    if(pg_num_rows($winner)==0){
+      echo '<td>No Winner</td>';
+    }else{
+      $twinner = pg_fetch_array($winner);
+      echo '<td>'.$twinner['username'].'</td>';
+    }
+    echo '</tr>';
   }
   echo '</table>';
-
-
-
-
-
-
 
   }else{
     //if user is not logged in
