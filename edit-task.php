@@ -49,7 +49,22 @@
            echo '<form action="admin-tasks.php" method="POST"><input class="btn btn-secondary btn-sm" type="submit" name="back" id="submit" value="Back"/></form>';
       }
     }else if(isset($_POST['delete'])){
-      /*delete task - database logic will delete all related entries in the databse with the task e.g. all related bids and wins*/
+      $taskid = $_POST['Taskid'];
+
+      //SQL query to delete task from task table
+      $qry = "DELETE FROM task WHERE tid='$taskid'";
+      $result = pg_query($db,$qry);
+      if(!$result){
+        //if query fails, giver user options to go back or try again
+        echo "Failed to delete, try again. Please note task cannot be deleted if it has been bid on or won</br>";
+        echo '<form action="edit-task.php" method="POST"><input id="blank" type="hidden" name="Taskid" value="'.$taskid.'"> <input class="btn btn-primary btn-sm" type="submit" name="delete" id="submit" value="Try Again"/></form>';
+        echo '<form action="admin-tasks.php" method="POST"><input class="btn btn-secondary btn-sm" type="submit" name="back" id="submit" value="Back"/></form>';
+
+      }else{
+        //if query successful, give user option to go back
+           echo "Updated successfully!</br>";
+           echo '<form action="admin-tasks.php" method="POST"><input class="btn btn-secondary btn-sm" type="submit" name="back" id="submit" value="Back"/></form>';
+      }
 
 
 

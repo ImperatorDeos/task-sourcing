@@ -85,6 +85,26 @@
          echo "Updated successfully!</br>";
          echo '<form action="admin-users.php" method="POST"><input class="btn btn-secondary btn-sm" type="submit" name="back" id="submit" value="Back"/></form>';
     }
+  }else if(isset($_POST['delete'])){
+    $userid = $_POST['userid'];
+
+    //SQL query to delete user from member table
+    $qry = "DELETE FROM member WHERE username='$userid'";
+    $result = pg_query($db,$qry);
+    if(!$result){
+      //if query fails, giver user options to go back or try again
+      echo "Failed to delete, try again. Please note user cannot be deleted if they have won a bid or own tasks</br>";
+      echo '<form action="edit-users.php" method="POST"><input id="blank" type="hidden" name="userid" value="'.$userid.'"> <input class="btn btn-primary btn-sm" type="submit" name="delete" id="submit" value="Try Again"/></form>';
+      echo '<form action="admin-users.php" method="POST"><input class="btn btn-secondary btn-sm" type="submit" name="back" id="submit" value="Back"/></form>';
+
+    }else{
+      //if query successful, give user option to go back
+         echo "Updated successfully!</br>";
+         echo '<form action="admin-users.php" method="POST"><input class="btn btn-secondary btn-sm" type="submit" name="back" id="submit" value="Back"/></form>';
+    }
+
+
+
   }else{
   /*Fetch user id and find information about user in database */
     $userid = $_POST['userid'];
@@ -102,19 +122,21 @@
   //  echo "Edit:";
     /*Display in editable format */
     echo '  <form action="edit-users.php" method="POST">
-               First Name: <br><input type="text"  pattern="^[^\']*$" name="fname" value="'.$user['fname'].'" required></br>
-               Last Name: <br><input type="text"  pattern="^[^\']*$" name="lname" value="'.$user['lname'].'" required></br>';
+    <div class="form-group">
+               First Name: <br><input class="form-control" type="text"  pattern="^[^\']*$" name="fname" value="'.$user['fname'].'" required></br>
+               Last Name: <br><input class="form-control" type="text"  pattern="^[^\']*$" name="lname" value="'.$user['lname'].'" required></br>';
                /*check if user is trying to edit self, if so do not allow to edit admin status*/
               if($_SESSION['admin'] == $userid){
                  echo "Cannot edit own admin status </br>";
                 echo '<input type="hidden" name="admin" value="'.$num.'">';
                }else{
-                 echo 'Admin: <br><input type="text" pattern="(Yes|No)" name="admin" value="'.$num.'" required></br>';
+                 echo 'Admin: <br><input class="form-control" type="text" pattern="(Yes|No)" name="admin" value="'.$num.'" required></br>';
 
                }
-    echo '     Password: <br><input type="text"  name="password" value="'.$user['password'].'" required></br>
+    echo '     Password: <br><input class="form-control" type="text"  name="password" value="'.$user['password'].'" required></br>
               <input type="hidden" name="userid" value="'.$userid.'">
                <input class="btn btn-secondary btn-sm" type="submit" name="update" id="submit" value="Update User" />
+               </div>
              </form>';
   }
 

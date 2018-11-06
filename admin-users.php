@@ -21,7 +21,7 @@
     /*List all tasks with and option to edit each individual task */
     echo "<h2>Users</h2>";
     echo '<table class="table">
-            <tr><th>First Name</th><th>Last Name</th><th>username</th><th>Admin</th><th>Edit</th></tr>';
+            <tr><th>First Name</th><th>Last Name</th><th>username</th><th>Admin</th><th>Edit User</th><th>Delete User</th></tr>';
 
     $query = "SELECT * FROM member ORDER BY lname ASC";
     $result = pg_query($db,$query);
@@ -38,7 +38,8 @@
         }else{
           echo '<td class="admin-yes">Yes</td>';
         }
-      echo '<td><form action="edit-users.php" method="POST"><input id="blank" type="hidden" name="userid" value="'.$users['username'].'"> <input class="btn btn-secondary btn-sm" type="submit" name="edit" id="submit" value="Edit User"/></form></td></tr>';
+      echo '<td><form action="edit-users.php" method="POST"><input id="blank" type="hidden" name="userid" value="'.$users['username'].'"> <input class="btn btn-secondary btn-sm" type="submit" name="edit" id="submit" value="Edit User"/></form></td>
+      <td><form action="edit-users.php" method="POST"><input id="blank" type="hidden" name="userid" value="'.$users['username'].'"> <input class="btn btn-secondary btn-sm" type="submit" name="delete" id="submit" value="Delete User"/></form></td></tr>';
     }
 
     echo '</table>';
