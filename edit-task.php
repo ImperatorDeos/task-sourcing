@@ -14,7 +14,7 @@
     include "header.php";
   ?>
      <title>Edit Task</title>
-     <link rel="stylesheet" href="style.css" title="Style Sheet" type="text/css" />
+
   </head>
 
   <body>
@@ -39,50 +39,66 @@
       $result = pg_query($db,$qry);
       if(!$result){
         //if query fails, giver user options to go back or try again
-        echo "Failed to update, try again";
-        echo '<form action="edit-task.php" method="POST"><input id="blank" type="hidden" name="Taskid" value="'.$tid.'"> <input type="submit" name="edit" id="submit" value="Try Again"/></form>';
-        echo '<form action="admin-tasks.php" method="POST"><input type="submit" name="back" id="submit" value="Back"/></form>';
+        echo "Failed to update, try again</br>";
+        echo '<form action="edit-task.php" method="POST"><input id="blank" type="hidden" name="Taskid" value="'.$tid.'"> <input class="btn btn-primary btn-sm" type="submit" name="edit" id="submit" value="Try Again"/></form>';
+        echo '<form action="admin-tasks.php" method="POST"><input class="btn btn-secondary btn-sm" type="submit" name="back" id="submit" value="Back"/></form>';
 
       }else{
         //if query successful, give user option to go back
-           echo "Updated successfully!";
-           echo '<form action="admin-tasks.php" method="POST"><input type="submit" name="back" id="submit" value="Back"/></form>';
+           echo "Updated successfully!</br>";
+           echo '<form action="admin-tasks.php" method="POST"><input class="btn btn-secondary btn-sm" type="submit" name="back" id="submit" value="Back"/></form>';
       }
+    }else if(isset($_POST['delete'])){
+      /*delete task - database logic will delete all related entries in the databse with the task e.g. all related bids and wins*/
+
+
+
     }else{
       /*Fetch task id and find information from task in database */
         $tid = $_POST['Taskid'];
         $query = "SELECT * FROM task WHERE tid = '$tid'";
         $result = pg_query($db,$query);
         $task = pg_fetch_array($result);
-        //echo "Edit:";
-        /*Display in editable format */
         echo '  <form action="edit-task.php" method="POST">
-                   Task Name: <br><input type="text"  pattern="^[^\']*$" name="tname" value="'.$task['tname'].'" required></br>
-                   Task Description: <br><input type="text" pattern="^[^\']*$" name="tdiscrip" value="'.$task['tdiscrip'].'" required></br>
-                   Location: <br><input type="text" pattern="^[^\']*$" name="location" value="'.$task['location'].'" required></br>
-                   Date: <br><input type="text" name="date" value="'.$task['sdate'].'" required></br>
-                   Start Time: <br><input type="text" name="stime" value="'.$task['starttime'].'" required></br>
-                   End Time: <br><input type="text" name="etime" value="'.$task['endtime'].'" required></br>
-                   User Belonging Too: <br><input type="text" name="username" value="'.$task['username'].'" required></br>
-                   Active: <br><input type="text" name="active"';
-                   /*Display true|false in a user friendly manner*/
-                   if($task['active'] == "t"){
-                     echo 'value="True"';
-                   }else{
-                     echo 'value="False"';
-                   }
-                   echo 'required></br>
-                   Price: <br><input type="text" name="price" value="'.$task['setprice'].'" required></br>
-                  <input type="hidden" name="tid" value="'.$task['tid'].'">
-                   <input type="submit" name="update" id="submit" value="Update Task" />
+          <div class="form-group">
+            <div class="form-row">
+                   <label for="tname">Task Name: </label>
+                    <input class="form-control" type="text"  pattern="^[^\']*$" name="tname" value="'.$task['tname'].'" required>
+                  <label for="location">Location: </label>
+                    <input class="form-control" type="text" pattern="^[^\']*$" name="location" value="'.$task['location'].'" required>
+                <label for="price">Price: </label>
+                  <input class="form-control" type="text" name="price" value="'.$task['setprice'].'" required>
+              </div>
+              <div class="form-row">
+                <label for="date">Date: </label>
+                  <input class="form-control" type="text" name="date" onfocus="(this.type=\'date\')" value="'.$task['sdate'].'" required>
+                <label for="stime">Start Time: </label>
+                  <input class="form-control" type="text" name="stime" onfocus="(this.type=\'time\')" value="'.$task['starttime'].'" required>
+                <label for="etime">End Time: </label>
+                  <input class="form-control" type="text" name="etime" onfocus="(this.type=\'time\')" value="'.$task['endtime'].'" required>
+              </div>
+              <div class="form-row">
+                <label for="username">User Belonging: </label>
+                  <input class="form-control" type="text" name="username" value="'.$task['username'].'" required>
+                <label for="active">Active: </label>
+                  <input class="form-control" type="text" name="active"';
+                  /*Display true|false in a user friendly manner*/
+                  if($task['active'] == "t"){
+                    echo 'value="True"';
+                  }else{
+                    echo 'value="False"';
+                  }
+                  echo 'required>
+              </div>
+
+                <label for="tdiscrip">Task Description: </label>
+                  <textarea class="form-control" pattern="^[^\']*$" name="tdiscrip" required>'.$task['tdiscrip'].'</textarea>
+                   <input type="hidden" name="tid" value="'.$task['tid'].'">
+                   <input class="btn btn-secondary btn-sm" type="submit" name="update" id="submit" value="Update Task" />
+                   </div>
                  </form>';
 
     }
-
-
-
-
-
 
 
   }else{

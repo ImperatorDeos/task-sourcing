@@ -13,7 +13,7 @@
     include "header.php";
   ?>
      <title>Edit Tasks</title>
-     <link rel="stylesheet" href="style.css" title="Style Sheet" type="text/css" />
+     
   </head>
 
   <body>
@@ -26,16 +26,10 @@
     $result = pg_query($db,$query);
     while($tasks = pg_fetch_array($result)) {
       echo '<tr><td>'.$tasks['tname'].'</td><td>'.$tasks['tdiscrip'].'</td><td>'.$tasks['location'].'</td><td>'.$tasks['sdate'].'</td><td>'.$tasks['starttime'].'</td><td>'.$tasks[endtime].'</td><td>'.$tasks['setprice'].'</td>
-      <td><form action="edit-task.php" method="POST"><input id="blank" type="hidden" name="Taskid" value="'.$tasks['tid'].'"> <input type="submit" name="edit" id="submit" value="Edit Task"/></form></td>
-      <td><form action="edit-task.php" method="POST"><input id="blank" type="hidden" name="Taskid" value="'.$tasks['tid'].'"> <input type="submit" name="delete" id="submit" value="Delete Task"/></form></td></tr>';
+      <td><form action="edit-task.php" method="POST"><input id="blank" type="hidden" name="Taskid" value="'.$tasks['tid'].'"> <input class="btn btn-secondary btn-sm" type="submit" name="edit" id="submit" value="Edit Task"/></form></td>
+      <td><form action="edit-task.php" method="POST"><input id="blank" type="hidden" name="Taskid" value="'.$tasks['tid'].'"> <input class="btn btn-secondary btn-sm" type="submit" name="delete" id="submit" value="Delete Task"/></form></td></tr>';
     }
     echo '</table>';
-
-    //Cant get the link to work:
-
-
-
-
 
   }else{
     //if user is not logged in

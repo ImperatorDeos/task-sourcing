@@ -60,7 +60,7 @@
 
     echo '<table class="table">
             <tr><th>Task Name</th><th>Description</th><th>Location</th><th>Date</th><th>Start</th><th>End</th><th>Ask Price</th><th>Bid Price</th></tr>';
-    $query = "SELECT * FROM task INNER JOIN bids on bids.tid = task.tid INNER JOIN winner on winner.tid = task.tid WHERE winner.username = '$username' ORDER BY sdate DESC";
+    $query = "SELECT DISTINCT * FROM task INNER JOIN bids on bids.tid = task.tid INNER JOIN winner on winner.tid = task.tid WHERE winner.username = '$username' AND bids.username = '$username' ORDER BY sdate DESC";
     $result = pg_query($db,$query);
     while($tasks = pg_fetch_array($result)){
       echo '<tr><td>'.$tasks['tname'].'</td><td>'.$tasks['tdiscrip'].'</td><td>'.$tasks['location'].'</td><td>'.$tasks['sdate'].'</td><td>'.$tasks['starttime'].'</td><td>'.$tasks[endtime].'</td><td>'.$tasks['setprice'].'</td><td>'.$tasks['price'].'</td></tr>';
@@ -85,7 +85,7 @@
       echo '<td>No Winner</td>';
     }else{
       $twinner = pg_fetch_array($winner);
-      echo '<td>'.$twinner['username'].'</td>';
+      echo '<td class="admin-yes">'.$twinner['username'].'</td>';
     }
     echo '</tr>';
   }

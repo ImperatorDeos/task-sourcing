@@ -14,7 +14,7 @@
     include "header.php";
   ?>
      <title>Bid on Task</title>
-     <link rel="stylesheet" href="style.css" title="Style Sheet" type="text/css" />
+
   </head>
 
   <body>
@@ -40,14 +40,14 @@
       if(!$result)
       {
         //if query fails, giver user options to go back or try again
-        echo "Failed to place bid, try again";
-        echo '<form action="bid.php" method="POST"><input id="blank" type="hidden" name="Taskid" value="'.$tid.'"> <input type="submit" name="placebid" id="submit" value="Try Again"/></form>';
-        echo '<form action="task.php" method="POST"><input type="submit" name="back" id="submit" value="Back"/></form>';
+        echo "Failed to place bid, try again </br>";
+        echo '<form action="bid.php" method="POST"><input id="blank" type="hidden" name="Taskid" value="'.$tid.'"> <input class="btn btn-primary btn-sm" type="submit" name="placebid" id="submit" value="Try Again"/></form>';
+        echo '<form action="task.php" method="POST"><input class="btn btn-secondary btn-sm" type="submit" name="back" id="submit" value="Back"/></form>';
 
       }else{
         //if query successful, give user option to go back
-           echo "Bid placed, good luck!";
-           echo '<form action="task.php" method="POST"><input type="submit" name="back" id="submit" value="Back"/></form>';
+           echo "Bid placed, good luck!</br>";
+           echo '<form action="task.php" method="POST"><input class="btn btn-secondary btn-sm" type="submit" name="back" id="submit" value="Back"/></form>';
       }
     }else{
       /*Fetch task id and find information from task in database */
@@ -61,14 +61,30 @@
         //echo "Edit:";
         /*Display in editable format */
         echo '
-                   Task Name: <br><input type="text"  pattern="^[^\']*$" name="tname" value="'.$task['tname'].'" required></br>
-                   Task Description: <br><input type="text" pattern="^[^\']*$" name="tdiscrip" value="'.$task['tdiscrip'].'" required></br>
-                   Location: <br><input type="text" pattern="^[^\']*$" name="location" value="'.$task['location'].'" required></br>
-                   Date: <br><input type="text" name="date" value="'.$task['sdate'].'" required></br>
-                   Start Time: <br><input type="text" name="stime" value="'.$task['starttime'].'" required></br>
-                   End Time: <br><input type="text" name="etime" value="'.$task['endtime'].'" required></br>
-                   User Belonging Too: <br><input type="text" name="username" value="'.$task['username'].'" required></br>
-                   Price: <br><input type="text" name="price" value="'.$task['setprice'].'" required></br>';
+
+                  <div class="form-group">
+                    <div class="form-row">
+                      <label for="tname">Task Name: </label>
+                        <input class="form-control" readonly type="text"  pattern="^[^\']*$" name="tname" value="'.$task['tname'].'" required>
+                      <label for="location">Location: </label>
+                        <input class="form-control" readonly type="text" pattern="^[^\']*$" name="location" value="'.$task['location'].'" required>
+                      <label for="username">User Belonging Too: </label>
+                        <input class="form-control" readonly type="text" name="username" value="'.$task['username'].'" required>
+                      <label for="price">Price: </label>
+                        <input class="form-control" readonly type="text" name="price" value="'.$task['setprice'].'" required>
+                    </div>
+                    <div class="form-row">
+                      <label for="date">Date: </label>
+                        <input class="form-control" readonly type="text" name="date" value="'.$task['sdate'].'" required>
+                      <label for="stime">Start Time: </label>
+                        <input class="form-control" readonly type="text" name="stime" value="'.$task['starttime'].'" required>
+                      <label for="etime">End Time: </label>
+                        <input class="form-control" readonly type="text" name="etime" value="'.$task['endtime'].'" required>
+
+                    </div>
+                    <label for="tdiscrip">Task Description: </label>
+                  <textarea class="form-control" readonly pattern="^[^\']*$" name="tdiscrip" required>'.$task['tdiscrip'].'</textarea>
+                   </div>';
 
                    /* SQL to find if user has bid on the task before */
                    /*$tester = "SELECT * FROM bids WHERE tid='$tid' AND username='$_SESSION['username']'";
@@ -81,12 +97,13 @@
             echo "You cannot bid on your own tasks";
           }/*else if($var == $username){
             This code will be to alert user that they cannot bid on the same task twice
-          }*/else          {
+          }*/else{
             echo '<form action="bid.php" method="POST">
-            Your Bid Price: <br><input type="text" name="bidprice" value="" required></br>
-           <input type="hidden" name="tid" value="'.$task['tid'].'">
-           <input type="hidden" name="busername" value="'.$task['username'].'">
-            <input type="submit" name="bid" id="submit" value="Place Bid" />
+                <label for="bidprice">Your Bid Price: </label>
+                <input class="form-control" type="text" name="bidprice" value="" required>
+                <input type="hidden" name="tid" value="'.$task['tid'].'">
+                <input type="hidden" name="busername" value="'.$task['username'].'">
+                <input class="btn btn-secondary btn-sm" type="submit" name="bid" id="submit" value="Place Bid" />
           </form>';
           }
 

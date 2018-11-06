@@ -21,19 +21,17 @@
   <?php
 
 
-  echo "From this page you will be able to edit all entries in this Database";
+  echo "<h4>From this page you will be able to edit all entries in this Database: </h4>";
   /* only admins should be ables to access these pages */
-  echo '<ul id="admin-men">
-  <li><a href="admin-tasks.php">Edit Tasks</a></li>
-  <li><a href="admin-bids.php">Edit Bids</a></li>
-  <li><a href="admin-wins.php">Edit Wins</a></li>
-  <li><a href="admin-users.php">Edit Users</a></li>
-  </ul>';
-
-
+  echo ' <div class="btn-group">
+            <a href="admin-tasks.php"><button class="btn btn-secondary btn-lg" type="button">Edit Tasks</button></a>
+            <a href="admin-bids.php"><button class="btn btn-secondary btn-lg" type="button">Edit Bids</button></a>
+            <a href="admin-wins.php"><button class="btn btn-secondary btn-lg" type="button">Edit Wins</button></a>
+            <a href="admin-users.php"><button class="btn btn-secondary btn-lg" type="button">Edit Users</button></a>
+          </div>';
 
   }else if(isset($_SESSION['username'])){
-    //if user is not logged in
+    //if user is not logged in as admin
       header ('location: home.php');
   }else{
       header ('location: login.php');

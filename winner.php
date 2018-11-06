@@ -14,7 +14,7 @@
     include "header.php";
   ?>
      <title>Select a Winning Bid</title>
-     <link rel="stylesheet" href="style.css" title="Style Sheet" type="text/css" />
+
   </head>
 
   <body>
@@ -38,14 +38,14 @@
       if(!$result)
       {
         //if query fails, giver user options to go back or try again
-        echo "Failed to Select winner, try again";
-        echo '<form action="winner.php" method="POST"><input id="blank" type="hidden" name="Taskid" value="'.$tid.'"> <input type="submit" name="selectwinner" id="submit" value="Try Again"/></form>';
-        echo '<form action="profile.php" method="POST"><input type="submit" name="back" id="submit" value="Back"/></form>';
+        echo "Failed to Select winner, try again</br>";
+        echo '<form action="winner.php" method="POST"><input id="blank" type="hidden" name="Taskid" value="'.$tid.'"> <input class="btn btn-primary btn-sm" type="submit" name="selectwinner" id="submit" value="Try Again"/></form>';
+        echo '<form action="profile.php" method="POST"><input class="btn btn-secondary btn-sm" type="submit" name="back" id="submit" value="Back"/></form>';
 
       }else{
         //if query successful, give user option to go back
-           echo "Winner selected, congratulations!";
-           echo '<form action="profile.php" method="POST"><input type="submit" name="back" id="submit" value="Back"/></form>';
+           echo "Winner selected, congratulations!</br>";
+           echo '<form action="profile.php" method="POST"><input class="btn btn-secondary btn-sm" type="submit" name="back" id="submit" value="Back"/></form>';
            $query = "UPDATE task SET active='FALSE' WHERE tid='$tid'";
            $test = pg_query($db,$query);
       }
@@ -57,12 +57,11 @@
         $query = "SELECT * FROM bids WHERE tid = '$tid'";
         $result = pg_query($db,$query);
 
-
-        echo '<table>
+        echo '<table class="table">
                 <th>User</th><th>Bid Price</th><th>Select Winner</th>';
         while($bids = pg_fetch_array($result)){
           echo '<tr><td>'.$bids['username'].'</td><td>'.$bids['price'].'</td>
-          <td><form action="winner.php" method="POST"><input id="blank" type="hidden" name="username" value="'.$bids['username'].'"><input id="blank" type="hidden" name="bid" value="'.$bids['bid'].'"><input id="blank" type="hidden" name="tid" value="'.$bids['tid'].'"> <input type="submit" name="winner" id="submit" value="Select Winner"/></form></td></tr>';
+          <td><form action="winner.php" method="POST"><input id="blank" type="hidden" name="username" value="'.$bids['username'].'"><input id="blank" type="hidden" name="bid" value="'.$bids['bid'].'"><input id="blank" type="hidden" name="tid" value="'.$bids['tid'].'"> <input class="btn btn-secondary btn-sm" type="submit" name="winner" id="submit" value="Select Winner"/></form></td></tr>';
         }
 
 

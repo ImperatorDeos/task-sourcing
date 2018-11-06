@@ -13,7 +13,7 @@
     include "header.php";
   ?>
      <title>Edit Users</title>
-     <link rel="stylesheet" href="style.css" title="Style Sheet" type="text/css" />
+
   </head>
 
   <body>
@@ -36,9 +36,9 @@
         if( pg_num_rows($test) == 0){
           echo '<td>No</td>';
         }else{
-          echo '<td>Yes</td>';
+          echo '<td class="admin-yes">Yes</td>';
         }
-      echo '<td><form action="edit-users.php" method="POST"><input id="blank" type="hidden" name="userid" value="'.$users['username'].'"> <input type="submit" name="edit" id="submit" value="Edit User"/></form></td></tr>';
+      echo '<td><form action="edit-users.php" method="POST"><input id="blank" type="hidden" name="userid" value="'.$users['username'].'"> <input class="btn btn-secondary btn-sm" type="submit" name="edit" id="submit" value="Edit User"/></form></td></tr>';
     }
 
     echo '</table>';

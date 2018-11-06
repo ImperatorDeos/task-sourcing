@@ -12,7 +12,7 @@
     include "header.php";
   ?>
      <title>Edit Users</title>
-     <link rel="stylesheet" href="style.css" title="Style Sheet" type="text/css" />
+
   </head>
 
   <body>
@@ -76,15 +76,14 @@
     /*Check that query executed*/
     if(!$result || !$num1){
       //if query fails, giver user options to go back or try again
-      echo "Failed to update, try again";
-      echo $admin;
-      echo '<form action="edit-users.php" method="POST"><input id="blank" type="hidden" name="userid" value="'.$userid.'"> <input type="submit" name="edit" id="submit" value="Try Again"/></form>';
-      echo '<form action="admin-users.php" method="POST"><input type="submit" name="back" id="submit" value="Back"/></form>';
+      echo "Failed to update, try again</br>";
+      echo '<form action="edit-users.php" method="POST"><input id="blank" type="hidden" name="userid" value="'.$userid.'"> <input class="btn btn-primary btn-sm" type="submit" name="edit" id="submit" value="Try Again"/></form>';
+      echo '<form action="admin-users.php" method="POST"><input class="btn btn-secondary btn-sm" type="submit" name="back" id="submit" value="Back"/></form>';
 
     }else{
       //if query successful, give user option to go back
-         echo "Updated successfully!";
-         echo '<form action="admin-users.php" method="POST"><input type="submit" name="back" id="submit" value="Back"/></form>';
+         echo "Updated successfully!</br>";
+         echo '<form action="admin-users.php" method="POST"><input class="btn btn-secondary btn-sm" type="submit" name="back" id="submit" value="Back"/></form>';
     }
   }else{
   /*Fetch user id and find information about user in database */
@@ -115,12 +114,9 @@
                }
     echo '     Password: <br><input type="text"  name="password" value="'.$user['password'].'" required></br>
               <input type="hidden" name="userid" value="'.$userid.'">
-               <input type="submit" name="update" id="submit" value="Update User" />
+               <input class="btn btn-secondary btn-sm" type="submit" name="update" id="submit" value="Update User" />
              </form>';
   }
-
-
-
 
 
   }else{
